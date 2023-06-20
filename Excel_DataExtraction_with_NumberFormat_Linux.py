@@ -12,17 +12,16 @@ def apply_number_format(cell):
 
 # a function to trigger formula calculation and convert to xlsx type
 def open_excel_with_libreoffice(file_name):
-  output = subprocess.check_output(['libreoffice', '--convert-to','xlsx', '--outdir', '/', file_name])
-  print(output.decode())
+  output = subprocess.check_output(f'libreoffice --convert-to xlsx --outdir / "{file_name}"', shell=True)
+  # output = subprocess.check_output(['libreoffice', '--convert-to','xlsx', '--outdir', '/', file_name])
 
 # remove the flattened file after data read by pandas
 def remove_flattened_file(file_path):
-  output = subprocess.check_output(['rm', file_path])
-  print(output.decode())
+  output = subprocess.check_output(f'rm "{file_path}"', shell=True)
 
 # ==============================================MAIN PROGRAM===============================================
 # directory and name of the target file
-file_directory = '/path/to/file'
+file_directory = '/path/to/directory'
 file_name = 'example.xlsx'
 
 # full paths
