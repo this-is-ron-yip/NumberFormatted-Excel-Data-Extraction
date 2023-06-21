@@ -1,4 +1,4 @@
-# NumberFormatted-Excel-Data-Extraction
+# PO Form Excel PreProcessor
 
 In an Excel Workbook, number-formatted values may contain important information, such as the currency of the value. However, there is no direct way to obtain the formatted value. Therefore, this program aims to flatten the number formats into the value of the cell, with all date values converted to the format of DD/MM/YYYY. 
 
