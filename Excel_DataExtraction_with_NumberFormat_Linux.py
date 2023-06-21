@@ -26,7 +26,7 @@ def change_date(match_obj):
     year = '20' + year
 
   return f'{day}/{month}/{year}'
-  
+
   
 # a function that convert number format into an excel formula
 def apply_number_format(cell):  
