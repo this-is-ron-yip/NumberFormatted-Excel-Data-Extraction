@@ -29,10 +29,10 @@ def change_date(match_obj):
 
   
 # a function that convert number format into an excel formula
-def apply_number_format(cell):  
+def apply_number_format(cell, unify_date_format_flag):  
   if cell.value is not None:
     
-    if cell.data_type == 'd':
+    if cell.data_type == 'd' and unify_date_format_flag:
       cell.value = f'=TEXT("{cell.value}", "dd/mm/yyyy")'
     
     elif cell.data_type == 's':
@@ -45,7 +45,7 @@ def apply_number_format(cell):
 
       unconverted_date = re.match(date_pattern1, cell.value) or re.match(date_pattern2, cell.value) or re.match(date_pattern3, cell.value)
     
-      if unconverted_date:
+      if unconverted_date and unify_date_format_flag:
         cell.value = change_date(unconverted_date)
       elif cell.number_format != 'General':
         cell.value = f'=IFERROR(TEXT("{cell.value}", "{cell.number_format}"), "{cell.value}")'
@@ -57,9 +57,10 @@ def apply_number_format(cell):
 
 
 # ==============================================MAIN PROGRAM===============================================
-# directory and name of the target file
+# input parameters
 file_directory = '/path/to/directory'
 file_name = 'example.xlsx'
+unify_date_format_flag = True
 
 # full paths
 file_path = file_directory + '/' + file_name
@@ -74,12 +75,12 @@ for ws in wb:
   for merged_ranges in ws.merged_cells:
     min_col, min_row, max_col, max_row = merged_ranges.bounds
     top_left_cell = ws.cell(row=min_row, column=min_col)
-    top_left_cell = apply_number_format(top_left_cell)
+    top_left_cell = apply_number_format(top_left_cell, unify_date_format_flag)
 
   # iterate the unmerged cells
   for row in ws.iter_rows(min_row=ws.min_row, min_col=ws.min_column, max_row=ws.max_row, max_col=ws.max_column):
     for cell in row:
-      cell = apply_number_format(cell)
+      cell = apply_number_format(cell, unify_date_format_flag)
 
 # save the modified workbook
 wb.save(file_path)
